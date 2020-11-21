@@ -1,0 +1,11 @@
+package org.example
+
+import org.example.module.Cat
+
+rule "cat-not-set-get-test"
+agenda-group "catSetGet"
+    when
+        $cat : Cat(name == "tomcat")
+    then
+        System.out.println($cat);
+end

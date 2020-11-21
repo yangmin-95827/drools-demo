@@ -1,0 +1,24 @@
+package org.example
+import org.example.module.Car
+//
+/*
+
+
+*/
+rule "drools-test-discount-age-60"
+agenda-group "drools-test-discount"
+when
+    car:Car(person.age > 60)
+then
+    car.setDiscount(80);
+    System.out.println("drools-test-discount-age-60: " + car.getPerson().getAge() +  "执行！");
+ end
+
+ rule "drools-test-discount-age-other"
+ agenda-group "drools-test-discount"
+ when
+     car:Car(person.age <= 60)
+ then
+     car.setDiscount(90);
+     System.out.println("drools-test-discount-age-other: " + car.getPerson().getAge() +  "执行！");
+  end

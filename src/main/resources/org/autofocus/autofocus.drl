@@ -1,0 +1,18 @@
+package org.autofocus
+
+import org.example.module.Person
+
+rule autofocus1
+    agenda-group "autofocus-test"
+    auto-focus true
+    when
+    then
+    System.out.println("autofocus1");
+    end
+
+rule autofocus2
+    agenda-group "autofocus-test-2"
+    when
+    then
+        System.out.println("autofocus2");
+     end

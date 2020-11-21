@@ -1,0 +1,33 @@
+package org.salienceTest
+
+import org.example.module.Person
+
+rule salience1
+    salience -1
+    when
+    then
+     System.out.println("test salience1");
+     end
+
+rule salience2
+    salience 2
+    when
+    then
+     System.out.println("test salience2");
+     end
+
+rule salience3
+    salience sal
+    when
+        Person(sal:age)
+    then
+     System.out.println("test salience3");
+     end
+
+rule salience4
+    salience 3
+    when
+    then
+     System.out.println("test salience4");
+     end
+

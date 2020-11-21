@@ -1,0 +1,15 @@
+package org.noLoop
+
+import org.example.module.Person
+
+rule "test-no-loop-01"
+    no-loop true
+    when
+        $p : Person($pAge:age > 12);
+    then
+        System.out.println("执行规则test-no-loop-01" + $p +" " + $pAge );
+        $p.setAge(15);
+        update($p)
+    end
+
+

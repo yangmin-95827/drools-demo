@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kmodule xmlns="http://www.drools.org/xsd/kmodule">
+    <kbase name="rules" packages="org.example">
+        <ksession name="all-rules"/>
+        <ksession name="stateless-session" type="stateless"/>
+    </kbase>
+    <kbase name="no-loop-base" packages="org.no-loop">
+        <ksession name="all-rules-no-loop"/>
+    </kbase>
+    <kbase name="ruleflow-group-base" packages="org.ruleflowgroup">
+        <ksession name="ruleflowgroup"/>
+    </kbase>
+    <kbase name="lockOnActive-group-base" packages="org.lockOnActive">
+        <ksession name="lockOnActive"/>
+    </kbase>
+    <kbase name="salience-group-base" packages="org.salience">
+        <ksession name="salience-rule"/>
+    </kbase>
+    <kbase name="autofocus-group-base" packages="org.autofocus">
+        <ksession name="autofocus-rule"/>
+    </kbase>
+    <kbase name="activationgroup-group-base" packages="org.activationgroup">
+        <ksession name="activationgroup-rule"/>
+    </kbase>
+    <kbase name="dateeffective-group-base" packages="org.dateeffective">
+        <ksession name="dateeffective-rule"/>
+    </kbase>
+</kmodule>

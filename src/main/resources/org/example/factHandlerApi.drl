@@ -1,0 +1,22 @@
+// 测试 FACT Handler
+package org.example
+
+import org.example.module.Car
+
+rule  "FactHandler-api-test-60"
+    agenda-group "factHandler"
+    when
+        $car : Car(person.age > 60);
+    then
+        System.out.println(" FactHandler-api-test-60  " + $car.getPerson().getAge() + " 已执行");
+end
+
+
+
+rule  "FactHandler-api-test-other"
+    agenda-group "factHandler"
+    when
+        $car : Car(person.age <= 60);
+    then
+        System.out.println(" FactHandler-api-test-other  " + $car.getPerson().getAge() + " 已执行");
+end

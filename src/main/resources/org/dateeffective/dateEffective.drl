@@ -1,0 +1,18 @@
+package org.dateEffective;
+
+
+
+rule "date-effective-test1"
+    date-effective "2020-11-19 07:28"
+    date-expires "2020-11-19 07:38"
+    when
+    then
+        System.out.println("date-effective-test1 执行了");
+     end
+
+rule "date-effective-test2"
+    date-effective "2020-11-19 07:38"
+    when
+    then
+        System.out.println("date-effective-test2 执行了");
+     end
