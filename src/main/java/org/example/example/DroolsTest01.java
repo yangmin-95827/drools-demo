@@ -30,7 +30,7 @@ public class DroolsTest01 {
         base.addKnowledgePackages(builder.getKnowledgePackages());
 
         KieSession kieSession = base.newKieSession();
-
+        kieSession.getAgenda().getAgendaGroup("drools-test-discount").setFocus();
 
         Car car = new Car(100, new Person(61));
         Car car1 = new Car(100, new Person(51));
