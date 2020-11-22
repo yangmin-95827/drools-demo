@@ -31,4 +31,9 @@
     <kbase name="calendar-test-base" packages="org.calendarsTest">
         <ksession name="calendar-test-session"/>
     </kbase>
+
+    <kbase name="lhs-test-base" packages="org.lhsTest">
+        <ksession name="lhs-test-session" />
+    </kbase>
+
 </kmodule>

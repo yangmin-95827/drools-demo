@@ -13,6 +13,11 @@ public class Person {
         this.age = age;
     }
 
+    public Person(Integer age,String name) {
+        this.age = age;
+        this.name = name;
+    }
+
     public Integer getAge() {
         return age;
     }

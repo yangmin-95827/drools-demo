@@ -1,0 +1,13 @@
+package org.lhsTest
+
+import org.example.module.Person
+
+rule "lhs-test-demo01"
+
+when
+    $p1 : Person(age > 11)
+    $p2 : Person(age > 16)
+then
+    System.out.println("lhs-test-demo01："+$p1+" : " +$p2 );
+end
+

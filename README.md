@@ -1,5 +1,6 @@
 # drools-demo
 
+github地址:[https://github.com/yangmin-95827/drools-demo](https://github.com/yangmin-95827/drools-demo)
 
 ## 关键字
 
