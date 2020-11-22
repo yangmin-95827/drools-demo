@@ -1,0 +1,20 @@
+package org.calendarsTest
+
+
+
+rule  "calendars-test-demo01"
+    calendars "WEEKDAY"
+    when
+
+    then
+        System.out.println("calendars-test-demo01 已执行！");
+     end
+
+rule  "calendars-test-demo02"
+    calendars "WEEKDAY_EXCLUDE"
+    when
+
+    then
+        System.out.println("calendars-test-demo02 已执行！");
+     end
+

@@ -25,4 +25,10 @@
     <kbase name="dateeffective-group-base" packages="org.dateeffective">
         <ksession name="dateeffective-rule"/>
     </kbase>
+    <kbase name="timer-test-base" packages="org.timerTest">
+        <ksession name="timer-test-session"/>
+    </kbase>
+    <kbase name="calendar-test-base" packages="org.calendarsTest">
+        <ksession name="calendar-test-session"/>
+    </kbase>
 </kmodule>

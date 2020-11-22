@@ -1,0 +1,20 @@
+package org.timerTest
+
+
+
+rule "timer-test-demo01"
+
+    timer(int:3s)
+when
+
+then
+    System.out.println("timer-test-demo01 已执行");
+end
+
+rule "timer-test-demo02"
+
+    timer(cron: 0/5 * * * * ? )
+    when
+    then
+        System.out.println("timer-test-demo02 已执行");
+     end
