@@ -114,7 +114,8 @@ java
 | `end`     |   当前规则结束
 
 ## 规则属性
-###### no-loop 定义当前规则是否不允许循环执行，默认为false，可以设置为true避免update、insert、retract、modify方法引发的死循环
+###### no-loop 
+定义当前规则是否不允许循环执行，默认为false，可以设置为true避免update、insert、retract、modify方法引发的死循环
     
     package org.noLoop
     
