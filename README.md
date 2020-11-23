@@ -2,6 +2,10 @@
 
 github地址:[https://github.com/yangmin-95827/drools-demo](https://github.com/yangmin-95827/drools-demo)
 
+### 基于 7.0.0
+1、在META-INF目录下创建kmodule.xml文件
+![kbase属性](../img/1606127312(1).jpg)
+
 ## 关键字
 
 | 关键字     |       描述                                           
