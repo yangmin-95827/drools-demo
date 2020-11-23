@@ -114,7 +114,7 @@ java
 | `end`     |   当前规则结束
 
 ## 规则属性
-### no-loop 定义当前规则是否不允许循环执行，默认为false，可以设置为true避免update、insert、retract、modify方法引发的死循环
+###### no-loop 定义当前规则是否不允许循环执行，默认为false，可以设置为true避免update、insert、retract、modify方法引发的死循环
     
     package org.noLoop
     
@@ -130,3 +130,6 @@ java
             update($p)
     end
     
+###### ruleflow-group 
+在使用规则流的时候要用到ruleflow-group 属性，改属性的值为一个字符串，
+作用是将规则划分为一个个的组，然后在规则流中通过使用ruleflow-group属性的值从而使用对应的规则
