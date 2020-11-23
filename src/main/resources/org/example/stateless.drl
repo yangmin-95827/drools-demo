@@ -1,0 +1,10 @@
+package  org.example
+
+import org.example.module.Person
+
+rule "stateless-test-demo01"
+    when
+        $p : Person(age < 60)
+    then
+        System.out.println("stateless-test-demo01 已执行");
+     end

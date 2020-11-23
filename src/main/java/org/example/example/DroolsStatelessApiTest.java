@@ -14,8 +14,6 @@ public class DroolsStatelessApiTest {
     public void statelessApiTest(){
         KieServices services = KieServices.Factory.get();
         KieContainer container = services.getKieClasspathContainer();
-//        KieBase kieBase = container.getKieBase("");
-//        kieBase.newStatelessKieSession()
         StatelessKieSession session = container.newStatelessKieSession("stateless-session");
 
         session.execute(new Person(34));

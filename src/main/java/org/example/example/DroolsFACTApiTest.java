@@ -12,9 +12,13 @@ public class DroolsFACTApiTest {
 
     @Test
     public void FACTApiTest(){
+        // 创建KieServices
         KieServices services = KieServices.Factory.get();
+        // 获取KieContainer
         KieContainer container = services.getKieClasspathContainer();
+        // 创建session
         KieSession kieSession = container.newKieSession("all-rules");
+        // 设置会话分组焦点
         kieSession.getAgenda().getAgendaGroup("factHandler").setFocus();
 
         Car car = new Car(100,new Person(67));
@@ -30,7 +34,6 @@ public class DroolsFACTApiTest {
 
         kieSession.fireAllRules();
 
-        System.out.println(insert.toExternalForm());
         kieSession.dispose();
 
 

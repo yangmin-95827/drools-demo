@@ -11,14 +11,19 @@ public class DroolsActivationGroupTest {
 
     @Test
     public void activationGroupTes(){
+        // 创建KieServices
         KieServices services = KieServices.Factory.get();
+        // 获取KieContainer
         KieContainer container = services.getKieClasspathContainer();
+        // 创建session
         KieSession session = container.newKieSession("activationgroup-rule");
 
         Person person = new Person(40);
-
+        // 插入FACT 对象
         session.insert(person);
+        // 匹配规则
         session.fireAllRules();
+        // 销毁session
         session.dispose();
     }
 
