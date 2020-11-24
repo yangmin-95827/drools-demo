@@ -134,3 +134,142 @@ java
 ###### ruleflow-group 
 在使用规则流的时候要用到ruleflow-group 属性，改属性的值为一个字符串，
 作用是将规则划分为一个个的组，然后在规则流中通过使用ruleflow-group属性的值从而使用对应的规则
+
+    rule "ruleflow-group-test-01"
+        ruleflow-group "ruleflow-group1"
+        when
+            p : Person(age > 20)
+        then
+            System.out.println("规则ruleflow-group-test-01已执行！");
+    end
+    
+###### lock-on-active
+
+避免因FACT对象被更新使得执行过的规则被再次执行，拥有no-loop的功能，同时
+又能避免因其他规则改变FACT对象导致规则重新执行。触发此规则的操作有update、retract、update
+、modify等。
+
+    rule "lockOnActive-test-01"
+        lock-on-active false
+        when
+            $p : Person(age < 20)
+        then
+            System.out.println("规则lockOnActive-test-01执行了");
+    end
+
+###### salience
+
+用来设置规则执行的优先级，salience属性的值是一个数字，数字越大执行的优先级
+越高，同时它的值可以是一个负数。默认情况下，规则的salience默认属性值为0。如果不设规则的salience属性，
+那么执行的顺序是随机的。salience属性的值可以根据FACT对象属性的值动态的设置。
+
+salience 属性执行顺序
+
+    rule salience1
+        salience -1
+        when
+        then
+         System.out.println("test salience1");
+    end
+    
+    rule salience2
+        salience 2
+        when
+        then
+         System.out.println("test salience2");
+    end
+
+动态绑定salience
+
+根据变量sal，动态绑定salience
+
+    
+    rule salience3
+        salience sal
+        when
+            Person(sal:age)
+        then
+         System.out.println("test salience3");
+    end
+
+###### agenda-group
+
+agenda-group属性的基本作用是对规则进行分组，在使用是必须设置分组焦点
+
+discount.drl
+
+    rule "drools-test-discount-age-60"
+    agenda-group "drools-test-discount"
+    when
+        car:Car(person.age > 60)
+    then
+        car.setDiscount(80);
+        System.out.println("drools-test-discount-age-60: " + car.getPerson().getAge() +  "执行！");
+     end
+
+java 
+    
+    //获取默认session
+    KieSession kieSession = base.newKieSession();
+    // 设置分组焦点
+    kieSession.getAgenda().getAgendaGroup("drools-test-discount").setFocus();   
+    
+###### auto-focus
+
+对agenda-group和ruleflow-group的补充，属性值默认为false，设置为true时规则对应的分组自动
+获得焦点，无需通过手动设置焦点
+
+    rule autofocus1
+        agenda-group "autofocus-test"
+        auto-focus true
+        when
+        then
+        System.out.println("autofocus1");
+    end
+
+###### activation-group 
+
+该属性将多个规则划分为一个组，具有相同activation-group
+属性值的规则只要有一个被执行，其他规则都不在执行
+
+    rule "activationgroup-test"
+        salience 1
+        activation-group "activationgroup-test"
+        when
+            p : Person(age > 20)
+        then
+            System.out.println("activationgroup-test-1 执行了");
+    end
+    
+    rule "activationgroup-test-2"
+        salience 2
+        activation-group "activationgroup-test"
+        when
+            p : Person(age > 30)
+        then
+            System.out.println("activationgroup-test-2 执行了");
+    end
+
+###### date-effective 和 date-expires
+
+属性用来控制规则只有达到指定的时间之后才会触发。
+与系统时间进行比对，指定时间大于等于系统时间时规则才会执行。
+默认的日期格式为“dd-MMM-yyyy”，可以通过系统属性“drools.dateformat”
+修改日期格式。与date-effective相反date-expires 在小于等于指定时间时才会执行。
+
+    rule "date-effective-test1"
+        date-effective "2020-11-19 07:28"
+        date-expires "2020-11-19 07:38"
+        when
+        then
+            System.out.println("date-effective-test1 执行了");
+    end
+
+###### dialect
+
+指定要使用的语言类型,java或mvel
+
+
+###### enabled
+
+设置规则是否可用。true：表示该规则可用；false：表示该规则不可用
