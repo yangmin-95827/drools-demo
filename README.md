@@ -4,7 +4,7 @@ github地址:[https://github.com/yangmin-95827/drools-demo](https://github.com/y
 
 ### 基于 7.0.0  
 
-#####1、在META-INF目录下创建kmodule.xml文件，drools在启动时会自动加载META-INF目录下的kmodule.xml文件  
+##### 1、在META-INF目录下创建kmodule.xml文件，drools在启动时会自动加载META-INF目录下的kmodule.xml文件  
 
     <?xml version="1.0" encoding="UTF-8"?>
     <kmodule xmlns="http://www.drools.org/xsd/kmodule">
@@ -12,15 +12,15 @@ github地址:[https://github.com/yangmin-95827/drools-demo](https://github.com/y
              <ksession name="all-rules"/>
          </kbase>
     </kmodule>
-#####2、kmodule标签是根标签  
+##### 2、kmodule标签是根标签  
 
-#####3、一个kmodule中可以包含多个kbase标签，每个kbase可以包含多个规则文件。  
+##### 3、一个kmodule中可以包含多个kbase标签，每个kbase可以包含多个规则文件。  
    * name属性必须为一个唯一的值，可以是任意字符串  
    * packages为drl文件所在resource目录下的路径。多个包或者drl文件使用逗号分隔，默认情况下drools会扫描resources目录下所有的规则文件
    * default 属性表示当前KieBase是不是默认的，如果是默认的则不用名称就可以查找到改KieBase，但每个kmodule下最多只能有一个默认的KieBase
    * kbase下面可以有一个或者多个ksession，ksession的name属性必须设置且必须唯一
 
-#####5、有状态session
+##### 5、有状态session
 通过KieContainer可以获取KieSession，在kmodule.xml配置文件中如果不指定ksession的type默认也是有状态的session。有状态session的特性是，我们可以通过建立一次session完成多次与规则引擎之间的交互，在没有调用dispose方法时，会维持会话状态。使用KieSession的一般步骤为，获取session，insert Fact对象，然后调用fireAllRules进行规则匹配，随后调用dispose方法关闭session。
 
 kmodule.xml
@@ -83,7 +83,7 @@ java
     session.execute(new Person(34));    
 
 
-#####4、drools规则文件.drl
+##### 7、drools规则文件.drl
 
     package org.example
     import org.example.module.Car
