@@ -1,0 +1,10 @@
+package org.dateformat
+
+
+rule "date-format-test-demo"
+
+when
+
+then
+
+end

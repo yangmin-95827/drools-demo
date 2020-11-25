@@ -413,3 +413,8 @@ java表达式
         System.out.println("type-conversion-test 已执行：" + $c );
     end
     
+###### 日期字符
+
+规则语法中除了支持JAVA标准字符，同时也支持日期字符。
+Drools默认支持的日期格式为“dd-mmm-yyyy”，
+可以通过设置系统变量“drools.dateformat”的值来改变默认的日期格式
