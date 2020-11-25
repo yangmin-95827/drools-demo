@@ -273,3 +273,76 @@ java
 ###### enabled
 
 设置规则是否可用。true：表示该规则可用；false：表示该规则不可用
+
+
+###### timer
+
+基于interval（间隔）和cron表达式。间隔定时器使用int来定义，它遵循java.util.Timerd对象的使用方法。
+cron定时器用cron来定义，使用Unix cron表达式
+
+    rule "timer-test-demo01"
+        // interval  延时3s执行
+        timer(int:3s)
+        //  延时3s执行，每次间隔5分钟
+        //timer( int: 3s 5m )
+    when
+    
+    then
+        System.out.println("timer-test-demo01 已执行");
+    end
+    
+    rule "timer-test-demo02"
+        //timer ( cron: <cron expression> )
+        timer(cron: 0/5 * * * * ? )
+        when
+        then
+            System.out.println("timer-test-demo02 已执行");
+    end
+
+###### 日历
+
+日历可以单独应用于规则中，也可以和timer结合在规则中使用，通过属性calendars来定义日历。
+
+calendarsTest.drl
+
+    rule  "calendars-test-demo01"
+        // 日历规则名称
+        calendars "WEEKDAY"
+        when
+    
+        then
+            System.out.println("calendars-test-demo01 已执行！");
+    end
+    
+    rule  "calendars-test-demo02"
+        // 日历规则名称
+        calendars "WEEKDAY_EXCLUDE"
+        when
+    
+        then
+            System.out.println("calendars-test-demo02 已执行！");
+    end
+
+DroolsCalendarsTest.java
+
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession session = container.newKieSession("calendar-test-session");
+    // 定义只在星期日生效的日历
+    session.getCalendars().set("WEEKDAY",l -> {
+        WeeklyCalendar calendar = new WeeklyCalendar();
+        calendar.setDaysExcluded(new boolean[]{false,false,false,false,false,false,true});
+        calendar.setDayExcluded(java.util.Calendar.SUNDAY,true);
+        return calendar.isTimeIncluded(l);
+    });
+    // 定义排除周一到周日的日历
+    session.getCalendars().set("WEEKDAY_EXCLUDE",l -> {
+        WeeklyCalendar calendar = new WeeklyCalendar();
+        calendar.setDaysExcluded(new boolean[]{false,false,false,false,false,false,false});
+        return calendar.isTimeIncluded(l);
+    });
+
+    session.fireAllRules();
+
+    session.dispose();
+

@@ -14,27 +14,25 @@ public class DroolsCalendarsTest {
         KieServices services = KieServices.Factory.get();
         KieContainer container = services.getKieClasspathContainer();
         KieSession session = container.newKieSession("calendar-test-session");
-        session.getCalendars().set("WEEKDAY",WEEKDAY);
-        session.getCalendars().set("WEEKDAY_EXCLUDE",WEEKDAY_EXCLUDE);
+        // 定义只在星期日生效的日历
+        session.getCalendars().set("WEEKDAY",l -> {
+            WeeklyCalendar calendar = new WeeklyCalendar();
+            calendar.setDaysExcluded(new boolean[]{false,false,false,false,false,false,true});
+            calendar.setDayExcluded(java.util.Calendar.SUNDAY,true);
+            return calendar.isTimeIncluded(l);
+        });
+        // 定义排除周一到周日的日历
+        session.getCalendars().set("WEEKDAY_EXCLUDE",l -> {
+            WeeklyCalendar calendar = new WeeklyCalendar();
+            calendar.setDaysExcluded(new boolean[]{false,false,false,false,false,false,false});
+            return calendar.isTimeIncluded(l);
+        });
 
         session.fireAllRules();
 
         session.dispose();
     }
 
-    // 包含周四
-    public static Calendar WEEKDAY  = l -> {
-        WeeklyCalendar calendar = new WeeklyCalendar();
-        calendar.setDaysExcluded(new boolean[]{false,false,false,false,false,false,true});
-        calendar.setDayExcluded(java.util.Calendar.SUNDAY,true);
-        return calendar.isTimeIncluded(l);
-    };
-
-    public static Calendar WEEKDAY_EXCLUDE = l -> {
-        WeeklyCalendar calendar = new WeeklyCalendar();
-        calendar.setDaysExcluded(new boolean[]{false,false,false,false,false,false,false});
-        return calendar.isTimeIncluded(l);
-    };
 
 
 
