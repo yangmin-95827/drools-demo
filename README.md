@@ -303,6 +303,16 @@ cron定时器用cron来定义，使用Unix cron表达式
 
 日历可以单独应用于规则中，也可以和timer结合在规则中使用，通过属性calendars来定义日历。
 
+日历使用需要引入 quartz
+
+    <!-- https://mvnrepository.com/artifact/org.opensymphony.quartz/quartz -->
+    <dependency>
+        <groupId>org.opensymphony.quartz</groupId>
+        <artifactId>quartz</artifactId>
+        <version>1.6.1</version>
+    </dependency>
+
+
 calendarsTest.drl
 
     rule  "calendars-test-demo01"
@@ -345,4 +355,26 @@ DroolsCalendarsTest.java
     session.fireAllRules();
 
     session.dispose();
+
+
+##### LHS 和 RHS
+
+LHS（left hand side）是指when和then之间的条件部分。RHS是then和end之间的结果部分，
+可以写java代码，是规则条件满足时执行的操作，可以直接调用FACT对象方法操作应用。
+如果LHS部分为空，自动添加一个eval(true)。LHS部分由一个或多个条件组成，条件又称为
+pattern（匹配模式），多个pattern之间可以使用and或者or链接，同时还可以使用小括号来确定pattern的优先级
+
+单个pattern
+
+    rule "test0002"
+        agenda-group "person-all-group"
+        when
+            // 绑定了两个变量$p和$time
+            $p : Person(name == "张三", $time : time == 40)
+        then
+            // 可以在RHS 中使用绑定的变量
+            System.out.println("传入了一个叫张三并且time === 40的人：" + $p);
+    end
+
+
 
