@@ -1,0 +1,12 @@
+package org.typeConversion
+
+import org.example.module.Car
+import org.example.module.Man
+
+rule "type-conversion-test"
+
+when
+    $c : Car(discount == 100,person#Man.sex == '男');
+then
+    System.out.println("type-conversion-test 已执行：" + $c );
+end

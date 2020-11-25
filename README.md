@@ -362,19 +362,54 @@ DroolsCalendarsTest.java
 LHS（left hand side）是指when和then之间的条件部分。RHS是then和end之间的结果部分，
 可以写java代码，是规则条件满足时执行的操作，可以直接调用FACT对象方法操作应用。
 如果LHS部分为空，自动添加一个eval(true)。LHS部分由一个或多个条件组成，条件又称为
-pattern（匹配模式），多个pattern之间可以使用and或者or链接，同时还可以使用小括号来确定pattern的优先级
+pattern（匹配模式），多个pattern之间可以使用and或者or链接，同时还可以使用小括号来确定pattern的优先级。
+pattern也可以使用java 表达式
 
 单个pattern
 
     rule "test0002"
         agenda-group "person-all-group"
         when
-            // 绑定了两个变量$p和$time
+            // 绑定了两个变量$p和$time 前缀$只是一个约定
             $p : Person(name == "张三", $time : time == 40)
         then
             // 可以在RHS 中使用绑定的变量
             System.out.println("传入了一个叫张三并且time === 40的人：" + $p);
     end
 
+java表达式
+    
+    Person( age > 100 && ( age % 10 == 0 ) )
+    
+也可以使用java工具
+
+    Person( Math.round( weight / ( height * height ) ) < 25.0 )
+
+任何一个JavaBean中的属性都可以访问，不过对应的属性必须提供getter方法或isProperty方法，
 
 
+###### 内部类分组访问
+
+访问内部类多个属性时可以使用一下两种方式
+    
+    //1. Car(discount < 20,person.age > 60)
+    
+    //2. Car(discount > 20,person.(age > 60))
+
+###### 强制类型转换
+
+在使用内部类的时候，往往需要将其转换为父类，在规则中可以通过“#”来进行强制转换
+
+    package org.typeConversion
+    
+    import org.example.module.Car
+    import org.example.module.Man
+    
+    rule "type-conversion-test"
+    
+    when
+        $c : Car(discount == 100,person#Man.sex == '男');
+    then
+        System.out.println("type-conversion-test 已执行：" + $c );
+    end
+    

@@ -36,4 +36,8 @@
         <ksession name="lhs-test-session" />
     </kbase>
 
+    <kbase name="typeConversion-test-base" packages="org.typeConversion">
+        <ksession name="typeConversion-test-session" />
+    </kbase>
+
 </kmodule>
