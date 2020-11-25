@@ -357,7 +357,7 @@ DroolsCalendarsTest.java
     session.dispose();
 
 
-##### LHS 和 RHS
+## LHS 和 RHS
 
 LHS（left hand side）是指when和then之间的条件部分。RHS是then和end之间的结果部分，
 可以写java代码，是规则条件满足时执行的操作，可以直接调用FACT对象方法操作应用。
