@@ -446,3 +446,66 @@ DroolsDateTest.java
     session.fireAllRules();
     session.dispose();
     
+###### List 和 Map 支持
+
+listAndMap.drl
+
+    package  org.listAndMap
+    
+    import org.example.module.Person
+    import org.example.listAndMap.DroolsListAndMapTest.Valid
+    
+    import java.util.Map
+    import java.util.List
+    
+    rule "list-map-test-demo"
+    
+    when
+        $m1 : Map()
+        $m2 : Map(this["name"] == "tom")
+        $m3 : Map(this["age"] >= 18)
+        $l1 : List();
+        $l2 : List(size == 2);
+        $p : Person(age == 19) from $l1;
+        $p1 : Person(childList[0].age == 20);
+        $p2  : Person(credentialMap["mouse"] == "雷蛇")
+        $p3  : Person(credentialMap["valid"] == true)
+    then
+        System.out.println("list-map-test-demo->m1:" + $m1 );
+        System.out.println("list-map-test-demo->m1:" + $m2 );
+        System.out.println("list-map-test-demo->m1:" + $m3 );
+        System.out.println("list-map-test-demo->$l1:" + $l1 );
+        System.out.println("list-map-test-demo->$l2:" + $l2 );
+        System.out.println("list-map-test-demo->$p:" + $p );
+        System.out.println("list-map-test-demo->$p1:" + $p1 );
+        System.out.println("list-map-test-demo->$p2:" + $p2 );
+        System.out.println("list-map-test-demo->$p3:" + $p3 );
+     end
+
+DroolsListAndMapTest.java
+    
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession session = container.newKieSession("listAndMap-test-session");
+
+    Map<String,Object> map = new HashMap<>();
+    map.put("name","tom");
+    map.put("age",19);
+
+    List<Person> list = new ArrayList<>();
+    list.add(new Person(18,"jerry"));
+    list.add(new Person(19,"tom"));
+
+    list.get(0).getChildList().add(new Person(20,"吴建超"));
+    list.get(0).getChildList().add(new Person(21,"老吴"));
+    list.get(0).getCredentialMap().put("mouse","雷蛇");
+    list.get(0).getCredentialMap().put("house","70年");
+    list.get(0).getCredentialMap().put("valid",true);
+
+    session.insert(map);
+    session.insert(list);
+    session.insert(list.get(0));
+
+    session.fireAllRules();
+    session.dispose();
+

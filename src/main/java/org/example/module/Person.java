@@ -1,8 +1,6 @@
 package org.example.module;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Person {
 
@@ -15,13 +13,19 @@ public class Person {
     private Date birthday;
 
     private List<Person> childList;
-    private Map<String,String> credentialMap;
+    private Map<String,Object> credentialMap;
+
+    public Person(){
+        this.childList = new ArrayList<>();
+        this.credentialMap = new HashMap<>();
+    }
 
     public Person(Integer age) {
         this.age = age;
     }
 
     public Person(Integer age,String name) {
+        this();
         this.age = age;
         this.name = name;
     }
@@ -66,11 +70,11 @@ public class Person {
         this.childList = childList;
     }
 
-    public Map<String, String> getCredentialMap() {
+    public Map<String, Object> getCredentialMap() {
         return credentialMap;
     }
 
-    public void setCredentialMap(Map<String, String> credentialMap) {
+    public void setCredentialMap(Map<String, Object> credentialMap) {
         this.credentialMap = credentialMap;
     }
 

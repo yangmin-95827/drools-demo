@@ -1,6 +1,8 @@
 package  org.listAndMap
 
 import org.example.module.Person
+import org.example.listAndMap.DroolsListAndMapTest.Valid
+
 import java.util.Map
 import java.util.List
 
@@ -11,11 +13,19 @@ when
     $m2 : Map(this["name"] == "tom")
     $m3 : Map(this["age"] >= 18)
     $l1 : List();
-    $p1 : List()
+    $l2 : List(size == 2);
+    $p : Person(age == 19) from $l1;
+    $p1 : Person(childList[0].age == 20);
+    $p2  : Person(credentialMap["mouse"] == "雷蛇")
+    $p3  : Person(credentialMap["valid"] == true)
 then
     System.out.println("list-map-test-demo->m1:" + $m1 );
     System.out.println("list-map-test-demo->m1:" + $m2 );
     System.out.println("list-map-test-demo->m1:" + $m3 );
     System.out.println("list-map-test-demo->$l1:" + $l1 );
-    System.out.println("list-map-test-demo->$l2:" + $l1 );
+    System.out.println("list-map-test-demo->$l2:" + $l2 );
+    System.out.println("list-map-test-demo->$p:" + $p );
+    System.out.println("list-map-test-demo->$p1:" + $p1 );
+    System.out.println("list-map-test-demo->$p2:" + $p2 );
+    System.out.println("list-map-test-demo->$p3:" + $p3 );
  end
