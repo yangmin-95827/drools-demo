@@ -418,3 +418,31 @@ java表达式
 规则语法中除了支持JAVA标准字符，同时也支持日期字符。
 Drools默认支持的日期格式为“dd-mmm-yyyy”，
 可以通过设置系统变量“drools.dateformat”的值来改变默认的日期格式
+
+dateformat.drl
+
+    package org.dateformat
+    
+    import org.example.module.Person
+    
+    rule "date-format-test-demo"
+    
+    when
+        $p : Person(age > 18,birthday == "1992-10-10")
+    then
+        System.out.println("date-format-test-demo:" + $p );
+    end
+
+DroolsDateTest.java
+
+    System.setProperty("drools.dateformat","yyyy-MM-dd");
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession session = container.newKieSession("dateformat-test-session");
+
+    Person person = new Person(19,"tom");
+    person.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse("1992-10-10"));
+    session.insert(person);
+    session.fireAllRules();
+    session.dispose();
+    

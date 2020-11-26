@@ -40,4 +40,11 @@
         <ksession name="typeConversion-test-session" />
     </kbase>
 
+    <kbase name="dateformat-test-base" packages="org.dateformat">
+        <ksession name="dateformat-test-session" />
+    </kbase>
+    <kbase name="listAndMap-test-base" packages="org.listAndMap">
+        <ksession name="listAndMap-test-session" />
+    </kbase>
+
 </kmodule>
