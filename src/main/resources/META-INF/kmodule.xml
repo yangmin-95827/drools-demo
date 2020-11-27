@@ -47,4 +47,8 @@
         <ksession name="listAndMap-test-session" />
     </kbase>
 
+    <kbase name="constraintLinker-test-base" packages="org.constraintLinker">
+        <ksession name="constraintLinker-test-session" />
+    </kbase>
+
 </kmodule>

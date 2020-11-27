@@ -509,3 +509,35 @@ DroolsListAndMapTest.java
     session.fireAllRules();
     session.dispose();
 
+
+## 约束链接
+
+对于对象内部的多个约束的链接，可以采用“&&”、“||”来实现。这三个链接符号如果没有用小括号
+来显示定义优先级的话，那么他们的执行顺序是：“&&”、“||”。Drools提供了12种类型比较操作符。
+如果进行常量比较，必须通过`eval(条件)`或者对象引用比较对象属性。
+Drools提供的比较操作符：
+
+    >、<、<=、>=、==、==
+    contains 、 not contains
+    memberOf 、 not memberOf
+    matches 、 not matches
+
+&&和||
+
+    package org.constraintLinker
+    
+    import org.example.module.Person
+    
+    
+    rule "constraint-linker-test-demo"
+    
+    when
+        $p : Person(age < 40 && >20 , name == "jerry"  )
+        $p1 : Person(age (< 40 && >20) || (< 50 && >45)  )
+    then
+        System.out.println($p);
+        System.out.println($p1);
+    end
+
+
+###### contains 和 not contains  
