@@ -1,0 +1,13 @@
+package org.matchesTest
+
+import org.example.module.Person
+
+rule "matches-test-demo"
+
+when
+    $p : Person(name matches "^.*tom$")
+    $p1 : Person(name not matches "^jerry$")
+then
+    System.out.println("matches-test-demo-$p:" + $p );
+    System.out.println("matches-test-demo-$p1:" + $p1 );
+end

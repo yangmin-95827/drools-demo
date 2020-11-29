@@ -1,0 +1,17 @@
+package org.memeber
+
+import org.example.module.Person
+import org.example.module.School
+import java.util.List
+
+rule "memberOf-test-demo1"
+
+when
+    $list : List()
+    $s : School(className not memberOf $list)
+    $p : Person(className memberOf $list)
+then
+    System.out.println("memberOf-test-demo1-$list:" + $list );
+    System.out.println("memberOf-test-demo1-$s:" + $s );
+    System.out.println("memberOf-test-demo1-$p:" + $p );
+end

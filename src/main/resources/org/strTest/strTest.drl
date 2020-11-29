@@ -1,0 +1,14 @@
+package org.str
+
+import org.example.module.Person
+
+rule "str-test-demo"
+when
+    $p : Person(name str[startsWith] "张三")
+    $p1 : Person(name str[endsWith] "丰")
+    $p2 : Person(name str[length] 3)
+then
+    System.out.println("str-test-demo-$p:" + $p );
+    System.out.println("str-test-demo-$p1:" + $p1 );
+    System.out.println("str-test-demo-$p2:" + $p2 );
+end

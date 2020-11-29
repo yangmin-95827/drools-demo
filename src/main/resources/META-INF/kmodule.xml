@@ -51,4 +51,24 @@
         <ksession name="constraintLinker-test-session" />
     </kbase>
 
+    <kbase name="contains-test-base" packages="org.contains">
+        <ksession name="contains-test-session" />
+    </kbase>
+
+    <kbase name="memberOf-test-base" packages="org.memberOf">
+        <ksession name="memberOf-test-session" />
+    </kbase>
+
+    <kbase name="matches-test-base" packages="org.matchesTest">
+        <ksession name="matches-test-session" />
+    </kbase>
+
+    <kbase name="soundslike-test-base" packages="org.soundslike">
+        <ksession name="soundslike-test-session" />
+    </kbase>
+
+    <kbase name="strTest-test-base" packages="org.strTest">
+        <ksession name="strTest-test-session" />
+    </kbase>
+
 </kmodule>

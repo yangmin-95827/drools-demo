@@ -6,6 +6,8 @@ public class School {
 
     private String name;
 
+    private String className;
+
 
     public int getCount() {
         return count;
@@ -28,11 +30,24 @@ public class School {
         this.name = name;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public School(String className) {
+        this.className = className;
+    }
+
     @Override
     public String toString() {
         return "School{" +
                 "count=" + count +
                 ", name='" + name + '\'' +
+                ", className='" + className + '\'' +
                 '}';
     }
 }

@@ -12,6 +12,8 @@ public class Person {
 
     private Date birthday;
 
+    private String className;
+
     private List<Person> childList;
     private Map<String,Object> credentialMap;
 
@@ -78,6 +80,14 @@ public class Person {
         this.credentialMap = credentialMap;
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -85,6 +95,7 @@ public class Person {
                 ", name='" + name + '\'' +
                 ", time='" + time + '\'' +
                 ", birthday=" + birthday +
+                ", className='" + className + '\'' +
                 ", childList=" + childList +
                 ", credentialMap=" + credentialMap +
                 '}';

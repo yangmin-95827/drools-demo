@@ -1,0 +1,10 @@
+package  org.soundslikeTest
+
+import org.example.module.Person
+
+rule "soundslike-test-demo"
+when
+    $p : Person(name)
+then
+    System.out.println("soundslike-test-demo-$p:" + $p );
+end

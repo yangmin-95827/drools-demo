@@ -540,4 +540,201 @@ Drools提供的比较操作符：
     end
 
 
-###### contains 和 not contains  
+###### contains 和 not contains比较操作符
+
+contains是用来检查一个Fact对象的某个属性值是否包含一个指定的对象值。其语法格式为：
+
+`Object(field[Collection|Array] contains|not contains value )`
+
+contains.drl
+
+    package org.containsTest
+    
+    
+    import org.example.module.Person
+    import org.example.module.School
+    import java.util.List
+    
+    // contains
+    rule "contains-test-demo"
+    
+    when
+        $s : School()// 匹配班级
+        $str : List()// 匹配班级名称集合
+        // 匹配学生的班级是否和输入的班级一致
+        $p : Person(className contains $s.className)
+        // 匹配班级名称集合里包含班级的学生
+        $p1 : Person($str contains className)
+    then
+        System.out.println("contains-test-demo-$s:" + $s );
+        System.out.println("contains-test-demo-$p:" + $p );
+        System.out.println("contains-test-demo-$str:" + $str );
+        System.out.println("contains-test-demo-$p1:" + $p1 );
+    end
+    
+    // not contains
+    rule "not-contains-test-demo"
+    
+    when
+        $s : School()// 匹配班级没有在班级名称集合中的学生
+        $p : Person(className not contains $s.className)
+    then
+        System.out.println("not-contains-test-demo-$s:" + $s );
+        System.out.println("not-contains-test-demo-$p:" + $p );
+    end
+
+DroolsContainsTestDemo.java
+
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession session = container.newKieSession("contains-test-session");
+
+    Person person= new Person(18,"tom");
+    person.setClassName("一班");
+    School school = new School("一班");
+
+    session.insert(person);
+    session.insert(school);
+    session.insert(new School("二班"));
+    session.insert(Arrays.asList("三班","四班","一班"));
+
+    session.fireAllRules();
+    session.dispose();
+    
+###### memberOf和not memberOf比较操作符
+
+memberOf用来判断Fact对象的某个字段是否在一个集合中，集合可以是List、Set、Map。
+
+memberOfTest.drl
+    
+    package org.memeber
+    
+    import org.example.module.Person
+    import org.example.module.School
+    import java.util.List
+    
+    rule "memberOf-test-demo1"
+    
+    when
+        $list : List()
+        $s : School(className not memberOf $list)
+        $p : Person(className memberOf $list)
+    then
+        System.out.println("memberOf-test-demo1-$list:" + $list );
+        System.out.println("memberOf-test-demo1-$s:" + $s );
+        System.out.println("memberOf-test-demo1-$p:" + $p );
+    end
+ 
+DroolsMemberOfTest.java
+
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession kieSession = container.newKieSession("memberOf-test-session");
+
+    Person person = new Person(19,"jerry");
+    person.setClassName("四班");
+    School school = new School("六班");
+    List<String> list = Arrays.asList("四班", "三班");
+
+    kieSession.insert(person);
+    kieSession.insert(school);
+    kieSession.insert(list);
+
+    kieSession.fireAllRules();
+    kieSession.dispose();
+
+###### matches和not matches比较操作符
+
+matches用来对某个Fact对象的字段与标准的Java正则表达式进行相匹配，被比较的字符串可以是一个标准的java正则表达式。
+
+matches.drl
+
+    package org.matchesTest
+    
+    import org.example.module.Person
+    
+    rule "matches-test-demo"
+    
+    when
+        $p : Person(name matches "^.*tom$")
+        $p1 : Person(name not matches "^jerry$")
+    then
+        System.out.println("matches-test-demo-$p:" + $p );
+        System.out.println("matches-test-demo-$p1:" + $p1 );
+    end
+    
+DroolsMatchesTest.java
+
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession session = container.newKieSession("matches-test-session");
+    
+    Person person= new Person( 19 , "tom" );
+    
+    session.insert(person);
+    
+    session.fireAllRules();
+    session.dispose();
+    }
+    
+###### soundslike 比较运算符
+
+soundslike用来检查单词是否具有与给定值几乎相同的声音（英文）。
+
+soundslike.drl
+    
+    package  org.soundslikeTest
+    
+    import org.example.module.Person
+    
+    rule "soundslike-test-demo"
+    when
+        $p : Person(name soundslike "foobar")
+    then
+        System.out.println("soundslike-test-demo-$p:" + $p );
+    end
+
+DroolsSoundslikeTest.java
+    
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession kieSession = container.newKieSession("soundslike-test-session");
+
+    Person person = new Person(20,"fubar");
+    kieSession.insert(person);
+
+    kieSession.fireAllRules();
+    kieSession.dispose();
+    
+###### str比较运算符
+
+str不仅检查String字段的是否以某一值开头/结尾，还可以判断字符的长度：
+`Object(fieldName str[startsWith|endsWith|length] "String"|1)`    
+
+strTest.drl
+
+    package org.str
+    
+    import org.example.module.Person
+    
+    rule "str-test-demo"
+    when
+        $p : Person(name str[startsWith] "张三")
+        $p1 : Person(name str[endsWith] "丰")
+        $p2 : Person(name str[length] 3)
+    then
+        System.out.println("str-test-demo-$p:" + $p );
+        System.out.println("str-test-demo-$p1:" + $p1 );
+        System.out.println("str-test-demo-$p2:" + $p2 );
+    end
+    
+DroolsStrTestDemo.java
+    
+    KieServices services = KieServices.Factory.get();
+    KieContainer container = services.getKieClasspathContainer();
+    KieSession session = container.newKieSession("strTest-test-session");
+
+    Person person = new Person(20 , "张三丰");
+    session.insert(person);
+    session.fireAllRules();
+    session.dispose();

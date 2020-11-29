@@ -1,0 +1,38 @@
+package org.containsTest
+
+
+import org.example.module.Person
+import org.example.module.School
+import java.util.List
+
+// contains
+rule "contains-test-demo"
+
+when
+    $s : School()// 匹配班级
+    $str : List()// 匹配班级名称集合
+    // 匹配学生的班级是否和输入的班级一致
+    $p : Person(className contains $s.className)
+    // 匹配班级名称集合里包含班级的学生
+    $p1 : Person($str  contains className)
+then
+    System.out.println("contains-test-demo-$s:" + $s );
+    System.out.println("contains-test-demo-$p:" + $p );
+    System.out.println("contains-test-demo-$str:" + $str );
+    System.out.println("contains-test-demo-$p1:" + $p1 );
+end
+
+// not contains
+rule "not-contains-test-demo"
+
+when
+    $s : School()
+    $p : Person(className not contains $s.className)
+then
+    System.out.println("not-contains-test-demo-$s:" + $s );
+    System.out.println("not-contains-test-demo-$p:" + $p );
+end
+
+
+
+
