@@ -1,0 +1,26 @@
+package org.insertTest
+
+import org.example.module.Person
+
+rule "insert-test-demo01"
+when
+
+then
+    System.out.println("insert-test-demo01-已执行");
+    insert(new Person(19,"tom"));
+end
+
+rule "insert-test-demo03"
+when
+
+then
+    System.out.println("insert-test-demo03-已执行");
+    insertLogical(new Person(19,"jerry"));
+end
+
+rule "insert-test-demo02"
+when
+    $p : Person(age == 19)
+then
+    System.out.println("insert-test-demo02-已执行:" + $p );
+end

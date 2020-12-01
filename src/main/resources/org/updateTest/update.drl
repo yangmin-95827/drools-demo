@@ -1,0 +1,22 @@
+package  org.updateTest
+
+import org.example.module.Person
+
+rule "update-test-demo01"
+
+when
+    $p : Person()
+then
+    System.out.println("update-test-demo01-已执行");
+    $p.setAge(20);
+    update($p)
+end
+
+rule "update-test-demo02"
+
+when
+    $p : Person(age == 20,name == "tom")
+then
+    System.out.println("update-test-demo02-已执行");
+end
+

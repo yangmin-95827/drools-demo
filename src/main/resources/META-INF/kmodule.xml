@@ -71,4 +71,16 @@
         <ksession name="strTest-test-session" />
     </kbase>
 
+    <kbase name="insertTest-test-base" packages="org.insertTest">
+        <ksession name="insertTest-test-session" />
+    </kbase>
+
+    <kbase name="updateTest-test-base" packages="org.updateTest">
+        <ksession name="updateTest-test-session" />
+    </kbase>
+
+    <kbase name="modifyTest-test-base" packages="org.modify">
+        <ksession name="modifyTest-test-session" />
+    </kbase>
+
 </kmodule>

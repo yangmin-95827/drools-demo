@@ -738,3 +738,144 @@ DroolsStrTestDemo.java
     session.insert(person);
     session.fireAllRules();
     session.dispose();
+    
+
+## insert、update、delete和modify函数
+
+###### insert
+
+insert函数的作用与我们在Java类中调用KieSession对象的insert方法的作用相同，都是用来将一个Fact对象
+插入到当前Working Memory中。一旦调用insert宏函数，那么Drools会重新与所有的规则在重新匹配一次，对于
+没有设施no-loop属性位true的规则，如果条件满足，不管其之前是否执行过都会在执行一次，这个特性不仅存在与insert
+宏函数上，update、modify、delete宏函数同样具有改特性，所以在某些情况下考虑不周调用insert、update、delete
+或者modify容易发生死循环。
+
+insert.drl
+
+    package org.insertTest
+    
+    import org.example.module.Person
+    
+    rule "insert-test-demo01"
+    when
+    
+    then
+        System.out.println("insert-test-demo01-已执行");
+        insert(new Person(19,"tom"));
+    end
+    
+    rule "insert-test-demo03"
+    when
+    
+    then
+        System.out.println("insert-test-demo03-已执行");
+        //insertLogical 函数的作用和insert类似
+        insertLogical(new Person(19,"jerry"));
+    end
+    
+    rule "insert-test-demo02"
+    when
+        $p : Person(age == 19)
+    then
+        System.out.println("insert-test-demo02-已执行:" + $p );
+    end
+    
+Java代码
+
+    @Test
+    public void insertTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("insertTest-test-session");
+
+        int i = kieSession.fireAllRules();
+        System.out.println("总共执行了" + i + "规则");
+        kieSession.dispose();
+    }
+
+###### update
+
+update函数用来实现对当前Working Memory当中的Fact进行更新，update宏函数的作用与StatefulSession
+对象的update方法的作用基本相同，都是用来告诉当前的Working Memory该Fact对象已经发生了变化。update的
+用法有两种形式，一种是在直接更新一个Fact对象，另一种是更新指定FactHandle对应的Fact对象
+
+1、第一种方式
+
+update.drl
+
+    package  org.updateTest
+    
+    import org.example.module.Person
+    
+    rule "update-test-demo01"
+    
+    when
+        $p : Person()
+    then
+        System.out.println("update-test-demo01-已执行");
+        $p.setAge(20);
+        update($p)
+    end
+    
+    rule "update-test-demo02"
+    
+    when
+        $p : Person(age == 20,name == "tom")
+    then
+        System.out.println("update-test-demo02-已执行");
+    end
+
+java代码
+
+    @Test
+    public void updateTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("updateTest-test-session");
+
+        kieSession.insert(new Person(18,"tom"));
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
+    
+2、第二种方式
+    
+modify.drl
+
+    package org.modifyTest
+    
+    import org.example.module.Person
+    
+    rule "modify-test-demo01"
+    
+    when
+        $p : Person()
+    then
+        System.out.println("modify-test-demo01已执行");
+        modify($p){
+            setAge(19)
+        }
+    end
+    
+    rule "modify-test-demo02"
+    
+    when
+        $p : Person(age == 19)
+    then
+        System.out.println("modify-test-demo02已执行");
+    end
+    
+java代码
+
+    @Test
+    public void modifyTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("modifyTest-test-session");
+
+        kieSession.insert(new Person(18,"tom"));
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }        
