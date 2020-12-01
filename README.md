@@ -879,3 +879,47 @@ java代码
         kieSession.fireAllRules();
         kieSession.dispose();
     }        
+
+###### delete 函数
+
+delete函数用来实现对Working Memory中的Fact对象进行删除操作，和insert、update、modify函数一样
+该函数也会触发规则的重新匹配。
+
+delete.drl
+
+    package org.deleteTest
+    
+    import org.example.module.Person
+    
+    rule "delete-test-demo01"
+    when
+        $p : Person(age == 21)
+    then
+        System.out.println("delete-test-demo01");
+        delete($p);
+    end
+    
+    
+    rule "delete-test-demo02"
+    when
+        $p : Person(age == 21)
+    then
+        System.out.println("delete-test-demo02");
+        delete($p);
+    end
+    
+java代码
+
+    @Test
+    public void deleteTest(){
+
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("deleteTest-test-session");
+
+        kieSession.insert(new Person(21,"tom"));
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+
+    }

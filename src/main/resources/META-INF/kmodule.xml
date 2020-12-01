@@ -83,4 +83,8 @@
         <ksession name="modifyTest-test-session" />
     </kbase>
 
+    <kbase name="deleteTest-test-base" packages="org.delete">
+        <ksession name="deleteTest-test-session" />
+    </kbase>
+
 </kmodule>
