@@ -1,0 +1,22 @@
+package org.extendsTest
+
+import  org.example.module.Person
+
+
+rule "extends-test-demo01"
+    agenda-group "extends-test-demo01"
+    when
+        $p : Person(age == 21)
+    then
+        System.out.println("extends-test-demo01 已执行");
+end
+
+
+rule "extends-test-demo02"
+    extends "extends-test-demo01"
+    ruleflow-group "extends-test-demo02"
+when
+    Person(name == "tom")
+then
+    System.out.println("extends-test-demo02 已执行：" + $p );
+end

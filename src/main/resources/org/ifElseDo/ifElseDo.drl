@@ -1,0 +1,21 @@
+package org.ifElseDo
+
+import org.example.module.Person
+
+rule "ifElseDo-test-demo01"
+
+    when
+        $p : Person()
+            if(age == 19) do[setAge]
+            else if(age == 21) do[setName1]
+    then
+        System.out.println("ifElseDo-test-demo01");
+    then[setName1]
+        $p.setName("tom");
+        System.out.println("ifElseDo-test-demo01-setName已执行 ：" + $p );
+    then[setAge]
+        $p.setAge(23);
+        System.out.println("ifElseDo-test-demo01-setName已执行 ：" + $p );
+ end
+
+

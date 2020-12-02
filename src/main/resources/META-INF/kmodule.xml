@@ -87,4 +87,12 @@
         <ksession name="deleteTest-test-session" />
     </kbase>
 
+    <kbase name="extendsTest-test-base" packages="org.extends">
+        <ksession name="extendsTest-test-session" />
+    </kbase>
+
+    <kbase name="ifElseDo-test-base" packages="org.ifElseDo">
+        <ksession name="ifElseDo-test-session" />
+    </kbase>
+
 </kmodule>

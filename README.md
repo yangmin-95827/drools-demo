@@ -923,3 +923,89 @@ java代码
         kieSession.dispose();
 
     }
+    
+## extends规则扩展
+
+extends可以在指定的规则上进行扩展
+
+extends.drl
+
+    package org.extendsTest
+    
+    import  org.example.module.Person
+    
+    
+    rule "extends-test-demo01"
+        agenda-group "extends-test-demo01"
+        when
+            $p : Person(age == 21)
+        then
+            System.out.println("extends-test-demo01 已执行");
+    end
+    
+    
+    rule "extends-test-demo02"
+        extends "extends-test-demo01"
+        ruleflow-group "extends-test-demo02"
+    when
+        Person(name == "tom")
+    then
+        System.out.println("extends-test-demo02 已执行：" + $p );
+    end
+    
+java 代码
+
+        @Test
+        public void extendsTest(){
+            KieServices services = KieServices.Factory.get();
+            KieContainer container = services.getKieClasspathContainer();
+            KieSession kieSession = container.newKieSession("extendsTest-test-session");
+            kieSession.getAgenda().getAgendaGroup("extends-test-demo02").setFocus();
+    
+            kieSession.insert(new Person(21,"tom"));
+    
+            kieSession.fireAllRules();
+            kieSession.dispose();
+        }
+        
+## if、else、do和标记
+
+在RHS中可以有多个`then`模块，可以给每个模块打上标记`then[xxxx]`。在LHS可以使用if、else来进行条件判断，然后使用do调用特定的结果（`then`），
+RHS中必须有一个默认的`then`，并且紧随在`when`之后。
+        
+ifElseDo.drl
+
+    package org.ifElseDo
+    
+    import org.example.module.Person
+    
+    rule "ifElseDo-test-demo01"
+    
+        when
+            $p : Person()
+                if(age == 19) do[setAge]
+                else if(age == 21) do[setName1]
+        then
+            System.out.println("ifElseDo-test-demo01");
+        then[setName1]
+            $p.setName("tom");
+            System.out.println("ifElseDo-test-demo01-setName已执行 ：" + $p );
+        then[setAge]
+            $p.setAge(23);
+            System.out.println("ifElseDo-test-demo01-setName已执行 ：" + $p );
+     end
+
+java代码
+
+    @Test
+    public void ifElseDoTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("ifElseDo-test-session");
+
+        kieSession.insert(new Person(19,"jerry"));
+        kieSession.insert(new Person(21));
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
