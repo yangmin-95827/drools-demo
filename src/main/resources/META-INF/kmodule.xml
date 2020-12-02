@@ -94,5 +94,8 @@
     <kbase name="ifElseDo-test-base" packages="org.ifElseDo">
         <ksession name="ifElseDo-test-session" />
     </kbase>
+    <kbase name="query-test-base" packages="org.query">
+        <ksession name="query-test-session" />
+    </kbase>
 
 </kmodule>

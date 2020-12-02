@@ -1,0 +1,21 @@
+package  org.queryTest01
+
+import org.example.module.Person
+
+rule "queryTest-test-demo001"
+
+    when
+        $p : Person(age > 20)
+    then
+        System.out.println("queryTest-test-demo01-已执行：" + $p );
+     end
+
+// 查询 age == 20 的Person
+query "query-person-age-equal-200"
+    preson : Person(age == 20)
+end
+
+// 查询 age > age1 的Person
+query "query-person-age-greater-param01"(int age1)
+    preson : Person(age > age1)
+end

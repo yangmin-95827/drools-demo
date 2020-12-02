@@ -1009,3 +1009,71 @@ java代码
         kieSession.fireAllRules();
         kieSession.dispose();
     }
+    
+## 查询query
+
+query语法提供了一种查询working memory 中符合约束条件的Fact对象的简单方法。query仅包含
+规则的LHS部分，不用指定`when`和`then`部分。Query有一个可选参数列表，每一个参数都有可选的类型，
+如果没有指定参数类型，则默认为Object类型。Query名称对于`KBase`需要全局唯一.
+
+
+query.drl
+
+    package  org.queryTest
+    
+    import org.example.module.Person
+    
+    rule "queryTest-test-demo01"
+    
+        when
+            $p : Person(age > 20)
+        then
+            System.out.println("queryTest-test-demo01-已执行：" + $p );
+         end
+    
+    // 查询 age == 20 的Person 无参数
+    query "query-person-age-equal-20"
+        preson : Person(age == 20)
+    end
+    
+    // 查询 age > age1 的Person  有参数
+    query "query-person-age-greater-param"(int age1)
+        preson : Person(age > age1)
+    end
+
+java代码
+
+    @Test
+    public void queryTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("query-test-session");
+
+        kieSession.insert(new Person(20, "tom"));
+        kieSession.insert(new Person(20, "jerry"));
+        kieSession.insert(new Person(21, "jerry1"));
+        kieSession.insert(new Person(22, "jerry2"));
+        kieSession.insert( new Person(23, "jerry3"));
+
+        int i = kieSession.fireAllRules();
+        System.out.println(i + "规则已匹配");
+
+        System.out.println("查询query-person-age-equal-20");
+        QueryResults queryResults = kieSession.getQueryResults("query-person-age-equal-20");
+        for (QueryResultsRow row: queryResults) {
+            Person person = (Person) row.get("preson");
+            System.out.println("person " + person.getAge());
+        }
+
+        System.out.println("查询query-person-age-greater-param");
+        QueryResults queryResults1 = kieSession.getQueryResults("query-person-age-greater-param",20);
+        for (QueryResultsRow row: queryResults1) {
+            Person person = (Person) row.get("preson");
+            System.out.println("person " + person.getAge());
+        }
+
+        kieSession.dispose();
+
+    }
+    
+    
