@@ -1,0 +1,28 @@
+package org.functionTest
+
+import org.example.module.Person
+// 导入静态方法
+import function org.example.functionTest.DroolsFunctionTest.personNameEqual
+
+rule "function-test-demo-01"
+
+when
+    $p : Person()
+    // 在LHS中不能直接使用函数需要使用eval对返回值进行表达式计算
+    eval(personNameEqual($p.getName(),"tom"))
+    eval(isPerson($p))
+then
+    System.out.println(hello($p.getName()));
+end
+
+// age == 21
+function boolean isPerson(Person p){
+    return p.getAge() == 21;
+}
+
+function String hello(String name){
+
+    return "hello " + name;
+}
+
+

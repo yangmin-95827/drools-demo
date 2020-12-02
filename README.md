@@ -1075,5 +1075,54 @@ java代码
         kieSession.dispose();
 
     }
+
+## function函数
+ 
+函数是在规则文件中放置语义代码的一种方法，和普通的java类中的方法所做到的事情没有区别。
+使用关键字`function`，导入外部的java静态方法或者定义一个方法。
+
+function.drl
+
+    package org.functionTest
+    
+    import org.example.module.Person
+    // 导入静态方法
+    import function org.example.functionTest.DroolsFunctionTest.personNameEqual
+    
+    rule "function-test-demo-01"
+    
+    when
+        $p : Person()
+        // 在LHS中不能直接使用函数需要使用eval对返回值进行表达式计算
+        eval(personNameEqual($p.getName(),"tom"))
+        eval(isPerson($p))
+    then
+        System.out.println(hello($p.getName()));
+    end
+    
+    // age == 21
+    function boolean isPerson(Person p){
+        return p.getAge() == 21;
+    }
+    
+    function String hello(String name){
+    
+        return "hello " + name;
+    }
+    
+java 代码
+
+     @Test
+        public void functionTest(){
+            KieServices services = KieServices.Factory.get();
+            KieContainer container = services.getKieClasspathContainer();
+            KieSession kieSession = container.newKieSession("function-test-session");
+    
+            kieSession.insert(new Person(21,"tom"));
+    
+            kieSession.fireAllRules();
+            kieSession.dispose();
+    
+        }
     
     

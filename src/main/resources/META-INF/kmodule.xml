@@ -98,4 +98,8 @@
         <ksession name="query-test-session" />
     </kbase>
 
+    <kbase name="function-test-base" packages="org.function">
+        <ksession name="function-test-session" />
+    </kbase>
+
 </kmodule>
