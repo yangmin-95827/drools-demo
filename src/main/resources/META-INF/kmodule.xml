@@ -102,4 +102,8 @@
         <ksession name="function-test-session" />
     </kbase>
 
+    <kbase name="global-test-base" packages="org.global">
+        <ksession name="global-test-session" />
+    </kbase>
+
 </kmodule>

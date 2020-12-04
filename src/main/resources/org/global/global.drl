@@ -1,0 +1,15 @@
+package org.globalTest
+
+import org.example.module.Person
+
+global  org.slf4j.Logger LOGGER // 日志对象
+global  java.util.List<Person> list     // person 集合
+
+rule "global-test-demo"
+
+when
+    $p : Person(age >= 20)
+then
+    list.add($p);
+    LOGGER.info("规则global-test-demo已执行:{}",$p);
+ end

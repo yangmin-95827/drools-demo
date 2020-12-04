@@ -1125,4 +1125,61 @@ java 代码
     
         }
     
+
+## Global 全局变量
+
+global语法是用来定义全局变量，被用于提供应用程序对象的规则，他能让应用程序的对象在规则文件中能够被访问。
+可以用来为规则文件提供数据或者服务。可以用来操作规则执行结果的处理和从规则返回数据，比如执行结果的日志或者值，
+或者与运用程序进行交互的规则的回调处理（不建议）。
+全局变量不会插入到Working Memory中，因此除非常量值，否则不应该将全局变量用于规则约束的判断中。
+如果多个包中声明具有相同标识符的全局变量，则必须是相同的类型，并且他们都将引用相同的全局值
+
+global.drl
+
+    package org.globalTest
+    
+    import org.example.module.Person
+    
+    global  org.slf4j.Logger LOGGER // 日志对象
+    global  java.util.List<Person> list     // person 集合
+    
+    rule "global-test-demo"
+    
+    when
+        $p : Person(age >= 20)
+    then
+        list.add($p);
+        LOGGER.info("规则global-test-demo已执行:{}",$p);
+     end
+
+java代码
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DroolsGlobalTest.class);
+    
+    @Test
+    public void globalTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("global-test-session");
+        List<Person> lst = new ArrayList<>();
+        // 设置全局变量 LOGGER
+        kieSession.setGlobal("LOGGER",LOGGER);
+        // 设置全局变量 list
+        kieSession.setGlobal("list",lst);
+
+        kieSession.insert(new Person(20,"tom1"));
+        kieSession.insert(new Person(19,"tom2"));
+        kieSession.insert(new Person(21,"tom3"));
+        kieSession.insert(new Person(22,"tom4"));
+        kieSession.insert(new Person(23,"tom5"));
+
+        kieSession.fireAllRules();
+
+        System.out.println(lst);
+
+        kieSession.dispose();
+    }
+
+## 声明类型
+
     
