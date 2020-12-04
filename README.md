@@ -1180,6 +1180,97 @@ java代码
         kieSession.dispose();
     }
 
-## 声明类型
+## 类型声明和元数据
 
+在DRL规则文件中声明新的FACT类型或者FACT类型的元数据
+
+###### 声明类型   
+
+Drools默认的Fact对象类型是`java.lang.Object`，但是可以根据需要在DRL文件中声明其他类型，
+在DRL文件中声明FACT类型能够直接在Drools引擎中定义新的FACT模型，而不用像Java这样的底层语言创建模型
+
+
+ declare.drl
+ 
+    package org.declareTest
     
+    import java.util.Date
+    // 声明 类型
+    declare Address
+        address : String
+    end
+    // 声明枚举
+    declare enum ScoreLevel
+        FIRST("1"),SECOND("2");
+        level : String
+    end
+    // 声明 类型
+    declare Person
+        name : String
+        age : Integer
+        birthday : Date
+    end
+    // 继承
+    declare Student extends Person
+        className : String
+        score :Integer
+        address: Address
+        level: ScoreLevel
+    end
+    
+    
+    rule "declare-test-demo01"
+    
+    when
+    
+    then
+        Student stu = new Student();
+        stu.setClassName("二班");
+        stu.setScore(90);
+        stu.setAge(19);
+        stu.setName("tom");
+        stu.setBirthday(new Date());
+        Address address = new Address();
+        address.setAddress("北京");
+        stu.setLevel(ScoreLevel.SECOND);
+        stu.setAddress(address);
+        insert(stu);
+        System.out.println("declare-test-demo01 已执行");
+    end
+    
+    rule "declare-test-demo02"
+    when
+        $s : Student(score >= 90)
+    then
+        System.out.println("declare-test-demo02: " + $s );
+    end
+    
+java代码
+
+    @Test
+    public void declareTest() throws IllegalAccessException, InstantiationException {
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("declare-test-session");
+        // 获取DRL定义的类型
+        FactType student = kieSession.getKieBase().getFactType("org.declareTest", "Student");
+        FactType address = kieSession.getKieBase().getFactType("org.declareTest", "Address");
+        // 实例化对象
+        Object a = address.newInstance();
+        Object nStu = student.newInstance();
+
+        // 设置属性值
+        address.set(a,"address","上海");
+        student.set(nStu,"className","三班");
+        student.set(nStu,"score",91);
+        student.set(nStu,"age",18);
+        student.set(nStu,"name","李四");
+        student.set(nStu,"birthday",new Date());
+        student.set(nStu,"address",a);
+
+        kieSession.insert(nStu);
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
+ 

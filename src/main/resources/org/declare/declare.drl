@@ -1,0 +1,54 @@
+package org.declareTest
+
+import java.util.Date
+// 声明 类型
+declare Address
+    address : String
+end
+// 声明枚举
+declare enum ScoreLevel
+    FIRST("1"),SECOND("2");
+    level : String
+end
+// 声明 类型
+declare Person
+    name : String
+    age : Integer
+    birthday : Date
+end
+// 继承
+declare Student extends Person
+    className : String
+    score :Integer
+    address: Address
+    level: ScoreLevel
+end
+
+
+rule "declare-test-demo01"
+
+when
+
+then
+    Student stu = new Student();
+    stu.setClassName("二班");
+    stu.setScore(90);
+    stu.setAge(19);
+    stu.setName("tom");
+    stu.setBirthday(new Date());
+    Address address = new Address();
+    address.setAddress("北京");
+    stu.setLevel(ScoreLevel.SECOND);
+    stu.setAddress(address);
+    insert(stu);
+    System.out.println("declare-test-demo01 已执行");
+end
+
+rule "declare-test-demo02"
+when
+    $s : Student(score >= 90)
+then
+    System.out.println("declare-test-demo02: " + $s );
+end
+
+

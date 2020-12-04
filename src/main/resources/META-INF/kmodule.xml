@@ -106,4 +106,8 @@
         <ksession name="global-test-session" />
     </kbase>
 
+    <kbase name="declare-test-base" packages="org.declare">
+        <ksession name="declare-test-session" />
+    </kbase>
+
 </kmodule>
