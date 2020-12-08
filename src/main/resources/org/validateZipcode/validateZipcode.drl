@@ -1,0 +1,27 @@
+package org.validateZipcode
+
+import org.example.module.Person
+import org.example.module.Address
+
+rule "validate-Zipcode-test-demo01"
+
+when
+    $p : Person($address : addresses)
+    $a : Address(zipcode == '23920W') from $address
+    $a1 : Address(zipcode == '23920W') from $p.addresses
+then
+    System.out.println("validate-Zipcode-test-demo01-已执行:" + $p );
+    System.out.println("validate-Zipcode-test-demo01-已执行:" + $a );
+    System.out.println("validate-Zipcode-test-demo01-已执行:" + $a1 );
+end
+
+
+rule "validate-Zipcode-test-demo02"
+
+when
+    $p : Person($address : name)
+    $a : String(charAt(0) == 't') from $address
+then
+    System.out.println("validate-Zipcode-test-demo02-已执行:" + $p );
+    System.out.println("validate-Zipcode-test-demo02-已执行:" + $a );
+end

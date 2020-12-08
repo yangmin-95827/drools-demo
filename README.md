@@ -2,7 +2,7 @@
 
 github地址:[https://github.com/yangmin-95827/drools-demo](https://github.com/yangmin-95827/drools-demo)
 
-### 基于 7.0.0  
+### 基于 7.46.0  
 
 ##### 1、在META-INF目录下创建kmodule.xml文件，drools在启动时会自动加载META-INF目录下的kmodule.xml文件  
 
@@ -602,6 +602,59 @@ java代码
 
 ###### from 
 
+件元素 from 让用户指定任意的资源，用于 LHS 模式的数据匹配。这允许引擎在非工作
+内存数据的基础上进行推断。数据源可以是一个绑定变量的一个子字段，或者方法调用的结
+果。它是一个超强结构，允许开箱即可与其他应用程序组件或框架集成使用。常见的集成例
+子是使用 hibernate 命名查询随时从数据库索取数据。用于定义数据源的表达式是任何遵
+守标准 MVEL 语法的表达式。 它允许你轻松地使用对象属性导航，执行方法调用，以及访问映射和集合的元素。
+
+validateZipcode.drl
+
+    package org.validateZipcode
+    
+    import org.example.module.Person
+    import org.example.module.Address
+    
+    rule "validate-Zipcode-test-demo01"
+    
+    when
+        $p : Person($address : addresses)
+        $a : Address(zipcode == '23920W') from $address
+        $a1 : Address(zipcode == '23920W') from $p.addresses
+    then
+        System.out.println("validate-Zipcode-test-demo01-已执行:" + $p );
+        System.out.println("validate-Zipcode-test-demo01-已执行:" + $a );
+        System.out.println("validate-Zipcode-test-demo01-已执行:" + $a1 );
+    end
+    
+    
+    rule "validate-Zipcode-test-demo02"
+    
+    when
+        $p : Person($address : name)
+        $a : String(charAt(0) == 't') from $address
+    then
+        System.out.println("validate-Zipcode-test-demo02-已执行:" + $p );
+        System.out.println("validate-Zipcode-test-demo02-已执行:" + $a );
+    end
+
+java代码
+
+    @Test
+    public void validateZipcode(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("validateZipcode-test-session");
+
+        Person person = new Person(20,"tom");
+        person.setAddresses(new ArrayList<>());
+        person.getAddresses().add(new Address("北京","000010"));
+        person.getAddresses().add(new Address("上海","23920W"));
+
+        kieSession.insert(person);
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
 
 
 ## 约束链接

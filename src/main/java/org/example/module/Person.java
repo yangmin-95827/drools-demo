@@ -17,6 +17,8 @@ public class Person {
     private List<Person> childList;
     private Map<String,Object> credentialMap;
 
+    private List<Address> addresses;
+
     public Person(){
         this.childList = new ArrayList<>();
         this.credentialMap = new HashMap<>();
@@ -88,6 +90,14 @@ public class Person {
         this.className = className;
     }
 
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
@@ -98,6 +108,7 @@ public class Person {
                 ", className='" + className + '\'' +
                 ", childList=" + childList +
                 ", credentialMap=" + credentialMap +
+                ", addresses=" + addresses +
                 '}';
     }
 }

@@ -118,4 +118,8 @@
         <ksession name="forallTest-test-session" />
     </kbase>
 
+    <kbase name="validateZipcode-test-base" packages="org.validateZipcode">
+        <ksession name="validateZipcode-test-session" />
+    </kbase>
+
 </kmodule>
