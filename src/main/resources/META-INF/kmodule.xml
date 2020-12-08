@@ -110,4 +110,12 @@
         <ksession name="declare-test-session" />
     </kbase>
 
+    <kbase name="notAndExists-test-base" packages="org.notAndExists">
+        <ksession name="notAndExists-test-session" />
+    </kbase>
+
+    <kbase name="forallTest-test-base" packages="org.forallTest">
+        <ksession name="forallTest-test-session" />
+    </kbase>
+
 </kmodule>

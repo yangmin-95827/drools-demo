@@ -1,0 +1,12 @@
+package org.notAndExists
+
+import org.example.module.Person
+import org.example.module.Car
+
+rule "not-exists-test-demo"
+when
+    not ( Person(age > 20))
+    exists( Car(discount == 100))
+then
+    System.out.println("not-exists-test-demo 已执行");
+end

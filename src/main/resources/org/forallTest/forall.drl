@@ -1,0 +1,23 @@
+package org.forallTest
+
+import org.example.module.Person
+import org.example.module.Car
+
+rule "forall-test-demo-01"
+when
+    $p : Person(age > 60)
+    $p1 : Person(name == "tom");
+
+then
+    System.out.println("forall-test-demo-01已执行" );
+ end
+
+
+rule "forall-test-demo-02"
+when
+    exists Person()
+    forall ($p : Person(age > 60)
+                 Person(this ==$p ,name == "tom") )
+then
+    System.out.println("forall-test-demo-02已执行" );
+ end

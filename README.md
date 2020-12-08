@@ -509,6 +509,100 @@ DroolsListAndMapTest.java
     session.fireAllRules();
     session.dispose();
 
+###### not和exists
+
+条件元素 not 是一阶逻辑的不存在（ non-existential）量词，用于检查在工作内存中不存在某东西。
+把"not"看作“ 一定没有……” 的意思。关键字 not 紧跟着用扩号扩起它所应用的条件元素。
+在单模式的最简情况下（如下所示），你可以选择忽略扩号`not Person()`，不可绑定变量。
+
+条件元素 exists 是一阶逻辑的存在（ existential）量词，用于检查在工作内存中存在某东西。
+把"exists"看作“ 至少有一个……” 的意思。关键字 exits 紧跟着用扩号扩起它所应用的条件元素。
+在单模式的最简情况下（如下所示），你可以选择忽略扩号`exists Person(age > 19)`，不可绑定变量。
+
+notAndExists.drl
+
+    package org.notAndExists
+    
+    import org.example.module.Person
+    import org.example.module.Car
+    
+    rule "not-exists-test-demo"
+    when
+        not (Person(age > 20))
+        exists(Car(discount == 100))
+    then
+        System.out.println("not-exists-test-demo 已执行" );
+    end
+
+java代码
+
+    @Test
+    public void notAndExistsTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("notAndExists-test-session");
+
+        kieSession.insert(new Person(19,"李四"));
+        kieSession.insert(new Car(100,new Person(19,"李四")));
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }    
+
+###### forall
+    
+使用它来验证是否所有与第一个模式匹配的Fact对象都与所有其余模式匹配。当`forall`结构满足，
+规则计算结果为`true`。该元素是作用域定界符，因此它可以使用任何以前绑定的变量，
+但是在其内部没有绑定的变量可在其外部使用。
+
+
+<font color="#dd0000">经demo01和demo02的测试没有发现`forall`和普通规则写法的区别与益处</font>
+
+forall.drl
+
+    package org.forallTest
+    
+    import org.example.module.Person
+    import org.example.module.Car
+    
+    rule "forall-test-demo-01"
+    when
+        $p : Person(age > 60)
+        $p1 : Person(this ==$p,name == "tom");
+    
+    then
+        System.out.println("forall-test-demo-01已执行" );
+     end
+    
+    
+    rule "forall-test-demo-02"
+    when
+        exists Person()
+        forall ($p : Person(age > 60)
+                     Person(this ==$p ,name == "tom") )
+    then
+        System.out.println("forall-test-demo-02已执行" );
+     end
+
+java代码
+
+     @Test
+    public void forallTest01(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession kieSession = container.newKieSession("forallTest-test-session");
+
+        kieSession.insert(new Person(61,"jerry"));
+        kieSession.insert(new Person(40,"tom"));
+
+        kieSession.fireAllRules();
+        kieSession.dispose();
+    }
+
+
+###### from 
+
+
 
 ## 约束链接
 
