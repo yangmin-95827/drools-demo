@@ -122,4 +122,8 @@
         <ksession name="validateZipcode-test-session" />
     </kbase>
 
+    <kbase name="decisionTable-test-base" packages="org.decisionTable">
+        <ksession name="decisionTable-test-session" />
+    </kbase>
+
 </kmodule>

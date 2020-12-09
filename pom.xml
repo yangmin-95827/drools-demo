@@ -46,6 +46,12 @@
       <artifactId>drools-mvel</artifactId>
       <version>${drools.version}</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.drools/drools-decisiontables -->
+    <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-decisiontables</artifactId>
+      <version>${drools.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
