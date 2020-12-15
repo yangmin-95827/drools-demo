@@ -2,7 +2,7 @@ package  org.example
 
 import org.example.module.Person
 
-rule "stateless-test-demo01"
+rule "stateless-test-demo02"
     when
         $p : Person(age < 60)
     then

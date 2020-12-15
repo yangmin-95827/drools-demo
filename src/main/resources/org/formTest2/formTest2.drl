@@ -1,0 +1,13 @@
+package org.formTest
+
+import org.example.module.Person
+import function org.example.formTest.DroolsFormTest.createPerson;
+
+rule "form-test-demo-01"
+
+when
+    $p : Person() from createPerson("tom",3)
+then
+    System.out.println("form-test-demo-01 已执行 ： " + $p);
+end
+

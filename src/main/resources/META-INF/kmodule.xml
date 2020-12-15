@@ -126,4 +126,8 @@
         <ksession name="decisionTable-test-session" />
     </kbase>
 
+    <kbase name="formTest2-test-base" packages="org.formTest2">
+        <ksession name="formTest2-test-session" />
+    </kbase>
+
 </kmodule>
