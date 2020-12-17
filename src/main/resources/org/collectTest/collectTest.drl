@@ -1,0 +1,47 @@
+package org.collectTest
+
+import org.example.module.Person
+import org.example.module.Address
+import java.util.LinkedHashSet
+
+rule "collect-test-demo01"
+when
+    $l : LinkedHashSet() from collect(Person())
+then
+    System.out.println("collect-test-demo01 已执行！");
+    System.out.println($l.getClass());
+    System.out.println($l);
+end
+
+
+rule "collect-test-demo02"
+when
+    $l : LinkedHashSet() from collect(Person(name str[startsWith] "tom"))
+then
+    System.out.println("collect-test-demo02 已执行！");
+    System.out.println($l.getClass());
+    System.out.println($l);
+end
+
+rule "collect-test-demo03"
+
+when
+    $p : Person(age > 11)
+    $l : LinkedHashSet(size() > 0) from collect( Address(zipcode == '0000010') from $p.getAddresses() );
+then
+    System.out.println("collect-test-demo03 已执行");
+    System.out.println($l.size());
+end
+
+
+rule "collect-test-demo04"
+
+when
+    $p : LinkedHashSet() from collect( Person(age > 11) )
+    $a : LinkedHashSet() from collect(  Person($a1 : addresses) from $p )
+
+then
+    System.out.println("collect-test-demo04 已执行");
+    System.out.println($p);
+//    System.out.println($a);
+ end

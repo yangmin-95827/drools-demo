@@ -1,0 +1,14 @@
+package org.forallTest2
+
+import org.example.module.Person
+
+
+rule "forall-test2-demo-01"
+    agenda-group "forall-test2"
+when
+    forall(
+        Person(age == 40 )
+    )
+then
+    System.out.println("forall-test2-demo-01 执行成功！");
+end

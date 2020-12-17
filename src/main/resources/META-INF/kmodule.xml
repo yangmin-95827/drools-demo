@@ -130,4 +130,8 @@
         <ksession name="formTest2-test-session" />
     </kbase>
 
+    <kbase name="collectTest-test-base" packages="org.collectTest">
+        <ksession name="collectTest-test-session" />
+    </kbase>
+
 </kmodule>

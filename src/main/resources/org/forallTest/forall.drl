@@ -4,6 +4,7 @@ import org.example.module.Person
 import org.example.module.Car
 
 rule "forall-test-demo-01"
+    agenda-group "forall-test-demo-0"
 when
     $p : Person(age > 60)
     $p1 : Person(name == "tom");
@@ -14,6 +15,7 @@ then
 
 
 rule "forall-test-demo-02"
+agenda-group "forall-test-demo-0"
 when
     exists Person()
     forall ($p : Person(age > 60)

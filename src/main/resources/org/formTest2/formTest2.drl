@@ -1,6 +1,6 @@
-package org.formTest
+package org.formTest2
 
-import org.example.module.Person
+import org.example.module.Person;
 import function org.example.formTest.DroolsFormTest.createPerson;
 
 rule "form-test-demo-01"

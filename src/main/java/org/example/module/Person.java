@@ -34,6 +34,14 @@ public class Person {
         this.name = name;
     }
 
+    public Person(Integer age,String name,Address address) {
+        this();
+        this.age = age;
+        this.name = name;
+        this.addresses = new ArrayList<>();
+        this.addresses.add(address);
+    }
+
     public Integer getAge() {
         return age;
     }
