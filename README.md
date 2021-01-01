@@ -601,7 +601,7 @@ java代码
 
 ###### from 
 
-件元素 from 让用户指定任意的资源，用于 LHS 模式的数据匹配。这允许引擎在非工作
+条件元素 from 让用户指定任意的资源，用于 LHS 模式的数据匹配。这允许引擎在非工作
 内存数据的基础上进行推断。数据源可以是一个绑定变量的一个子字段，或者方法调用的结
 果。它是一个超强结构，允许开箱即可与其他应用程序组件或框架集成使用。常见的集成例
 子是使用 hibernate 命名查询随时从数据库索取数据。用于定义数据源的表达式是任何遵
@@ -661,6 +661,63 @@ java代码
 collect元素的结果模式可以是实现java.util的任何具体类。集合接口，并提供默认的无参数公共构造函数。
 您可以使用Java集合，如List、LinkedList和HashSet，或者您自己的类。如果变量在条件中的collect元素之前绑定，
 则可以使用这些变量来约束源模式和结果模式。但是，在collect元素内部进行的任何绑定都不能在其外部使用。
+
+collectTest.drl
+
+    package org.collectTest
+    
+    import org.example.module.Person
+    import org.example.module.Address
+    import java.util.LinkedHashSet
+    
+    rule "collect-test-demo01"
+    when
+        $l : LinkedHashSet() from collect(Person())
+    then
+        System.out.println("collect-test-demo01 已执行！");
+        System.out.println($l.getClass());
+        System.out.println($l);
+    end
+    
+    
+    rule "collect-test-demo02"
+    when
+        $l : LinkedHashSet() from collect(Person(name str[startsWith] "tom"))
+    then
+        System.out.println("collect-test-demo02 已执行！");
+        System.out.println($l.getClass());
+        System.out.println($l);
+    end
+
+java代码
+    
+    @Test
+    public void collectTest(){
+        KieServices services = KieServices.Factory.get();
+        KieContainer container = services.getKieClasspathContainer();
+        KieSession session = container.newKieSession("collectTest-test-session");
+
+        session.insert(new Person(11,"tom1",new Address("成都","0000012")));
+        session.insert(new Person(12,"tom2",new Address("上海","0000013")));
+        session.insert(new Person(13,"tom3",new Address("北京","0000010")));
+        session.insert(new Person(14,"tom4",new Address("南京","0000011")));
+        session.insert(new Person(15,"jerry",new Address("北京","0000010")));
+        session.insert(new Person(16,"jerry",new Address("北京","0000010")));
+
+        session.fireAllRules();
+        session.dispose();
+
+    }
+
+###### accumulate
+
+条件元素`accumulate`是一个更为灵活的`collect`，它可以实现`collect`做不了的事。如条件元素与`accumulate`
+的参数可以求一些不同的值，这是collect做不了的事。它主要做的事是允许规则迭代整个集合对象，为每个元素制定执行的动作，
+并在结束时返回一个结果对象，accumulate不仅支持预定义的函数使用，而且可以使用其他内置函数，重要的是可以使用自定义的函数
+进行特殊化操作。Drools附带的内置accumulate功能，包括average、max、min、count、sum、collectSet、collectList
+
+
+
 
 ## 约束链接
 

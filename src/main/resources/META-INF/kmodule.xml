@@ -134,4 +134,8 @@
         <ksession name="collectTest-test-session" />
     </kbase>
 
+    <kbase name="accoumulateTest-test-base" packages="org.accoumulateTest">
+        <ksession name="accoumulateTest-test-session" />
+    </kbase>
+
 </kmodule>

@@ -1,0 +1,15 @@
+package org.accoumulateTest
+
+
+import org.example.module.Person
+import java.util.List
+
+rule "accumulate-test-demo01"
+
+when
+  accumulate(Person($age:age > 20),$max:max($age),$min:min($age),$o : collectList($age))
+then
+    System.out.println("accumulate-test-demo01已执行, max: "+$max+" , min: "+$min+" ");
+    System.out.println($o);
+end
+
