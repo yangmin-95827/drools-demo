@@ -1,0 +1,17 @@
+package org.accoumulateTest;
+
+import org.example.module.Person
+
+
+rule "accumulate-test-demo02"
+
+when
+   $totalAge : Integer() from accumulate(Person($age:age),
+        init(Integer i =0 ;),
+        action(i += $age;),
+        result(i)
+    )
+then
+    System.out.println("合计年龄为：" + $totalAge);
+end
+
